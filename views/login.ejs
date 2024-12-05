@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+    <style>
+        body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      box-sizing: border-box;
+
+      /* Gradient Background */
+      background: linear-gradient(90deg, #89A8B2, #000000bb, #144758);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s infinite linear;
+    }
+
+    /* Keyframes for the gradient animation */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+        p {
+            text-align: center;
+        }
+        a.createButton {
+            background-color: #6A9AB0;
+            border-color: #6A9AB0;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+        }
+        .createButton:hover {
+            background-color: #6a9ab0b9;
+        }
+
+         a.createButton2 {
+            color:rgb(100, 100, 100);
+            padding: 2px;
+            margin-top: 100px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .createButton2:hover {
+            color:#6a9ab0b9;
+
+        }
+        form {
+            width: 500px;
+            padding: 20px;
+            background-color:#B3C8CF;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-top: 1px;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            font-weight: bold;
+            color:rgb(100, 100, 100);
+        }
+        input, button {
+            display: inline-block;
+            transition: background-color 0.3s;
+            width: 96%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+
+        }
+        button {
+            background-color: #6A9AB0;
+            color: white;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            
+        }
+        button:hover {
+            background-color:#6a9ab0b9;
+        }
+ 
+        .welcome {
+            font-size: 60px;
+            font-family: "Playfair Display", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin-top: 0;
+                }
+ 
+        .toggle-btns {
+            text-align: center;
+            font-weight: bold;
+           
+        }
+
+        img {
+            height: 20vh;
+            width: 20vh;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="img">
+        <img src="image/logo.png" alt="Image" />
+    </div>
+        <br><p class = "welcome" style = "color: white">WELCOME!</p>
+        <form id="login-form" action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <% if (typeof error !== 'undefined' && error.includes("Username")) { %>
+                <p><%= error %></p>
+            <% } %>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <% if (typeof error !== 'undefined' && error.includes("password")) { %>
+                <p><%= error %></p>
+            <% } %>
+
+            <a href class="createButton2" type="button">Forgot Password?</a>
+            <br><br>
+            <button type="submit">Log In</button>
+            
+        </form>
+
+    <div class="toggle-btns">
+        <br><br>
+            <a href="/signup" class="createButton" type="button">Create an Account</a>
+    </div>
+</body>
+</html>

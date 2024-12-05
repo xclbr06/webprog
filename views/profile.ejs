@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            background-color: #B3C8CF;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-container {
+            text-align: center; /* Center text and elements */
+        }
+
+        .profilePicture {
+            width: 150px; 
+            height: 150px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            
+        }
+
+        .fileEditBtn, .uploadBtn {
+            display: inline-block;
+            transition: background-color 0.3s;
+            background-color: #6A9AB0;
+            border-color: #6A9AB0;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-top: 100px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .uploadBtn:hover {
+            background-color: #6a9ab07a;
+            border-color: #6A9AB0;
+        }
+
+
+        .username, .email, .sex {
+            margin: 10px 0;
+            background-color: #6A9AB0;
+            border-color: #6A9AB0;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .editCancel  {
+            margin-top: 20px; /* Space above the edit/cancel buttons */
+            
+        }
+        .editBtn, .cancelBtn  {
+            display: inline-block;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            background-color: #6A9AB0;
+            border-color: #6A9AB0;
+            padding: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .editBtn:hover, .cancelBtn:hover  {
+            background-color: #6a9ab07a;
+            border-color: #6A9AB0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+
+        <!-- Photo and Upload -->
+        <div class="photoUp">
+            <img src="<%= user.profilePicPath %>" class="profilePicture" alt="Profile Picture">
+            <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
+                <input type="file" name="profilePic" accept="image/*" class="fileEditBtn">
+                <button type="submit" class="uploadBtn">Upload</button>
+            </form>
+        </div>
+        
+        <!-- Username -->
+        <div class="username">
+            <label for="username" class="">Username:</label>
+            <input type="text" id="username" class="" value="<%= user.userName %>" disabled>
+        </div>
+        
+        <!-- Email -->
+        <div class="email">
+            <label for="email" class="">Email:</label>
+            <input type="email" id="email" class="" value="<%= user.email %>" disabled>
+        </div>
+        
+        <!-- Sex -->
+        <div class="sex">
+            <label for="sex" class="">Sex:</label>
+            <select id="sex" class="" disabled>
+                <option value="Male" <%= user.sex === 'Male' ? 'selected' : '' %>>Male</option>
+                <option value="Female" <%= user.sex === 'Female' ? 'selected' : '' %>>Female</option>
+                <option value="Others" <%= user.sex === 'Others' ? 'selected' : '' %>>Others</option>
+            </select>
+        </div>
+        
+        <div class="editCancel">
+            <button id="editButton" class="editBtn">Edit</button>
+            <button id="cancelButton" class="cancelBtn" onclick="window.location.href='/home'">Cancel</button>
+        </div>
+    </div>
+    <script>
+        const editButton = document.getElementById('editButton');
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        const sexSelect = document.getElementById('sex');
+    
+        editButton.addEventListener('click', function() {
+            if (editButton.textContent === 'Edit') {
+                //Enable inputs
+                usernameInput.disabled = false;
+                emailInput.disabled = false;
+                sexSelect.disabled = false;
+                editButton.textContent = 'Save';
+            } else {
+                //Prepare data to send to server
+                const updatedData = {
+                    userName: usernameInput.value,
+                    email: emailInput.value,
+                    sex: sexSelect.value
+                };
+    
+                //Send the updated data to server
+                fetch('/update-profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/home';
+                    } else {
+                        alert('Error updating profile.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error updating profile.');
+                });
+    
+                //Disable inputs after saving
+                usernameInput.disabled = true;
+                emailInput.disabled = true;
+                sexSelect.disabled = true;
+                editButton.textContent = 'Edit';
+            }
+        });
+    </script>
+</body>
+</html>

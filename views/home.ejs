@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional external CSS -->
+    <style>
+        body {
+            background-color: #B3C8CF;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            /* Gradient Background */
+            background: linear-gradient(90deg, #89A8B2, #000000bb, #144758);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s infinite linear;
+        }
+
+        /* Keyframes for the gradient animation */
+        @keyframes gradientAnimation {
+               0% {
+                background-position: 0% 50%;
+               }
+                50% {
+                background-position: 100% 50%;
+               }
+                100% {
+                background-position: 0% 50%;
+           }
+         }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #89A8B2;
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .profile img {
+            display: inline-block;
+            transition: background-color 0.3s;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .profile img:hover {
+            opacity: 50%;
+            transition-property: all;
+        }
+
+
+        .main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #file-upload {
+            display: none;
+        }
+
+        #username-profile {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            font-size: medium;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding: 0; 
+            text-align: center;
+        }
+
+        li {
+            margin: 10px 0; 
+        }
+
+        .button {
+            color: black;
+            text-decoration: none; 
+        }
+        
+        .button:hover {
+            color: rgba(0, 0, 0, 0.61);
+        }
+        .uploadBtn {
+            font-size: medium;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 1px;
+            text-align: center;
+        }
+
+        .upload2 {
+            display: inline-block;
+            background-color: #89A8B2;
+            border-color: black;
+            border-width: 2px;
+            border-style: solid;
+            transition: background-color 0.3s;
+            font-size: medium;
+            font-weight: bold;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .upload2:hover {
+            background-color: #5f8a94;
+
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-width: 2px;
+            border-style: solid;
+            border-color: black;
+        }
+        .table-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table th, table td {
+            border: 1px solid #2A3335;
+            padding: 8px;
+            text-align: center;
+            color: white; 
+        }
+
+        table td {
+            background-color:#0a5db083;
+        }
+
+        table th {
+            background-color: #0A5EB0;
+        }
+
+        .actions button {
+            margin-right: 5px;
+        }
+
+        .download, .delete {
+            background-color: #89A8B2;
+            padding: 5px;
+            border-radius: 10%;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        
+        .download {
+            text-decoration: none;
+            color: black;
+            border-style: solid;
+            border-width: 2px;
+        }
+
+        .delete {
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4.5px;
+            border-color: black;
+            border-style: solid;
+            border-width: 2px;
+        }
+
+        .download:hover, .delete:hover {
+            background-color: #89a8b2af;
+            border-color: black;
+        }
+
+        #dropdown *{
+            transition: all ease .30s;
+        }
+
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            right: -10px;
+            top: 60px;
+        }
+
+        .show_nav {
+            display: block;
+            visibility: visible;
+            right: 10px;
+            opacity: 1;
+            transition: all ease .30s;
+        }
+
+        .show_nav:hover {
+            color: #2A3335;
+
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="welcome-message" id="welcome-message">
+            <%= welcomeMsg %> 
+            <span id="username"><%= firstName %> <%= lastName %></span>
+        </div>
+        <div class="profile">
+            <span id="username-profile"><%= username %></span>
+            <img
+                src="<%= profilePicPath %>"
+                alt="Profile Picture"
+                class="profile"
+                onclick="toggleDropDown()" <!-- Make the image clickable to toggle dropdown -->
+                <div id="dropdown" class="hidden">
+                    <ul>
+                        <li><a href="/profile" class="button">Profile</a></li>
+                        <li><a href="#" class="button">Settings</a></li>
+                        <li><a href="/logout" class="button">Logout</a></li>
+                    </ul>
+                </div>
+        </div>
+    </header>
+</body>
+</html>
+    <div class="uploadBtn">
+    <form
+        action="/upload"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input
+          type="file"
+          name="file"
+          id="file-upload"
+          required
+          onchange="this.form.submit()"
+        />
+        <button
+          type="button"
+          class="upload2"
+          onclick="document.getElementById('file-upload').click();"
+        >
+          Upload File
+        </button>
+    </form>
+        <% if (typeof error !== 'undefined' && error.includes("File")) { %>
+        <p ><%= error %></p>
+        <% } %>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Original Name</th>
+                    <th>MIME Type</th>
+                    <th>Size (Bytes)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="file-table-body">
+                <% if (files && files.length > 0) { %> <% files.forEach(file => { %>
+                    <tr>
+                      <td class="">
+                        <%= file.fileName %>
+                      </td>
+                      <td class="">
+                        <%= file.origName %>
+                      </td>
+                      <td class="">
+                        <%= file.mimeType %>
+                      </td>
+                      <td class="">
+                        <%= file.size %>
+                      </td>
+                      <td class="">
+                        <a
+                          href="/download/<%= file.fileName %>"
+                          method="GET"
+                          class="download"
+                          >Download</a
+                        >
+                        <form
+                          action="/delete/<%= file.fileName %>"
+                          method="POST"
+                          style="display: inline"
+                        >
+                          <button
+                            type="submit"
+                            class="delete"
+                          >
+                            Delete
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% }); %> <% } else { %>
+                    <tr>
+                      <td
+                        colspan="5"
+                        class=""
+                      >
+                        No uploads found.
+                      </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+    <script>
+      const toggleDropDown = () => {
+        let dropdown = document.querySelector("#dropdown");
+        dropdown.classList.toggle("show_nav");
+      };
+    </script>
+</body>
+</html>
