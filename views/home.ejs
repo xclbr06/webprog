@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome Page</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Optional external CSS -->
     <style>
         body {
             background-color: #B3C8CF;
@@ -18,7 +17,7 @@
             animation: gradientAnimation 15s infinite linear;
         }
 
-        /* Keyframes for the gradient animation */
+        /* Keyframes for the gradient background animation */
         @keyframes gradientAnimation {
                0% {
                 background-position: 0% 50%;
@@ -31,41 +30,45 @@
            }
          }
 
+        /* Styling for the header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background-color: #89A8B2;
+            color: #f5f5f5;
         }
 
+        /* Welcome message styling */
         .welcome-message {
             font-size: 24px;
             font-weight: bold;
         }
 
+        /* Profile section styling with an image and username */
         .profile {
             display: flex;
             align-items: center;
             position: relative;
         }
 
+        /* Profile image styling */
         .profile img {
             display: inline-block;
             transition: background-color 0.3s;
+            border: 2px solid #f5f5f5;
             width: 50px;
             height: 50px;
             border-radius: 50%;
             margin-right: 10px;
             cursor: pointer;
         }
-
         .profile img:hover {
             opacity: 50%;
             transition-property: all;
         }
 
-
+        /* Main section layout */
         .main {
             flex-grow: 1;
             display: flex;
@@ -74,16 +77,19 @@
             justify-content: center;
         }
 
+        /* Hidden file upload input */
         #file-upload {
             display: none;
         }
 
+        /* Username in the profile section */
         #username-profile {
             font-size: 24px;
             font-weight: bold;
             margin-right: 20px;
         }
 
+        /* Styling for unordered lists*/
         ul {
             list-style-type: none;
             font-size: medium;
@@ -94,18 +100,21 @@
             text-align: center;
         }
 
+        /* List item margin */
         li {
             margin: 10px 0; 
         }
 
+        /* Styling for buttons */
         .button {
             color: black;
             text-decoration: none; 
         }
-        
         .button:hover {
             color: rgba(0, 0, 0, 0.61);
         }
+
+        /* Upload button section styling */
         .uploadBtn {
             font-size: medium;
             font-weight: bold;
@@ -114,6 +123,7 @@
             text-align: center;
         }
 
+        /* Choose file button styling */
         .upload2 {
             display: inline-block;
             background-color: #89A8B2;
@@ -132,9 +142,9 @@
 
         .upload2:hover {
             background-color: #5f8a94;
-
         }
 
+        /* Table styling for displaying file information */
         table {
             width: 80%;
             border-collapse: collapse;
@@ -143,6 +153,8 @@
             border-style: solid;
             border-color: black;
         }
+
+        /* Table container styling to center the table */
         .table-container {
             flex-grow: 1;
             display: flex;
@@ -150,6 +162,7 @@
             align-items: center;
         }
 
+        /* Table cell and header styling */
         table th, table td {
             border: 1px solid #2A3335;
             padding: 8px;
@@ -157,40 +170,47 @@
             color: white; 
         }
 
+        /* Styling for table data rows */
         table td {
             background-color:#0a5db083;
         }
 
+        /* Styling for table headers */
         table th {
             background-color: #0A5EB0;
         }
 
+        /* Action buttons styling */
         .actions button {
             margin-right: 5px;
         }
 
+        /* Styling for download and delete buttons */
         .download, .delete {
             background-color: #89A8B2;
             padding: 5px;
             border-radius: 10%;
+            border-style: solid;
+            border-color: black;
+            border-width: 2px;
             display: inline-block;
             transition: background-color 0.3s;
+            font-weight: bold;
+            color: black;
+            
         }
         
+        /* Download button */
         .download {
             text-decoration: none;
-            color: black;
-            border-style: solid;
-            border-width: 2px;
         }
 
+        /* Delete button styling */
         .delete {
             font-size: 16px;
             cursor: pointer;
             padding: 4.5px;
-            border-color: black;
-            border-style: solid;
-            border-width: 2px;
+            
         }
 
         .download:hover, .delete:hover {
@@ -198,10 +218,12 @@
             border-color: black;
         }
 
+        /* Dropdown menu styling: hidden by default and transitions when shown */
         #dropdown *{
             transition: all ease .30s;
         }
 
+        /* Hidden dropdown menu */
         .hidden {
             visibility: hidden;
             opacity: 0;
@@ -210,6 +232,7 @@
             top: 60px;
         }
 
+        /* Dropdown menu visible state */
         .show_nav {
             display: block;
             visibility: visible;
@@ -220,11 +243,12 @@
 
         .show_nav:hover {
             color: #2A3335;
-
         }
     </style>
 </head>
 <body>
+
+    <!-- Header section with welcome message and profile image -->
     <header>
         <div class="welcome-message" id="welcome-message">
             <%= welcomeMsg %> 
@@ -232,6 +256,7 @@
         </div>
         <div class="profile">
             <span id="username-profile"><%= username %></span>
+            <!-- Profile image: clickable to toggle the dropdown menu -->
             <img
                 src="<%= profilePicPath %>"
                 alt="Profile Picture"
@@ -241,38 +266,38 @@
                     <ul>
                         <li><a href="/profile" class="button">Profile</a></li>
                         <li><a href="#" class="button">Settings</a></li>
-                        <li><a href="/logout" class="button">Logout</a></li>
+                        <li><a href="/" class="button">Logout</a></li>
                     </ul>
                 </div>
         </div>
     </header>
-</body>
-</html>
-    <div class="uploadBtn">
-    <form
-        action="/upload"
-        method="POST"
-        enctype="multipart/form-data"
-      >
+
+    <!-- Upload file section with unified button for selecting and uploading a file -->
+<div class="uploadBtn">
+    <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
         <input
-          type="file"
-          name="file"
-          id="file-upload"
-          required
-          onchange="this.form.submit()"
-        />
+            type="file"
+            name="file"
+            id="file-upload"
+            required
+            style="display: none;"
+            onchange="document.getElementById('upload-form').submit();" <!-- Auto-submit on file selection -->
         <button
-          type="button"
-          class="upload2"
-          onclick="document.getElementById('file-upload').click();"
+            type="button"
+            class="upload2"
+            onclick="document.getElementById('file-upload').click();"
         >
-          Upload File
+            Upload File
         </button>
     </form>
-        <% if (typeof error !== 'undefined' && error.includes("File")) { %>
-        <p ><%= error %></p>
-        <% } %>
+    <div>
+          <!-- Error message for file upload if any -->
+          <% if (typeof error !== 'undefined' && error.includes("File")) { %>
+            <p><%= error %></p>
+          <% } %>
     </div>
+
+    <!-- Table to display file details -->
     <div class="table-container">
         <table>
             <thead>
@@ -287,19 +312,20 @@
             <tbody id="file-table-body">
                 <% if (files && files.length > 0) { %> <% files.forEach(file => { %>
                     <tr>
-                      <td class="">
+                      <td>
                         <%= file.fileName %>
                       </td>
-                      <td class="">
+                      <td>
                         <%= file.origName %>
                       </td>
-                      <td class="">
+                      <td >
                         <%= file.mimeType %>
                       </td>
-                      <td class="">
+                      <td>
                         <%= file.size %>
                       </td>
-                      <td class="">
+                      <td>
+                        <!-- Action buttons for downloading or deleting a file -->
                         <a
                           href="/download/<%= file.fileName %>"
                           method="GET"
@@ -324,7 +350,6 @@
                     <tr>
                       <td
                         colspan="5"
-                        class=""
                       >
                         No uploads found.
                       </td>
@@ -333,6 +358,8 @@
             </tbody>
         </table>
     </div>
+
+    <!-- JavaScript function to toggle the visibility of the dropdown menu -->
     <script>
       const toggleDropDown = () => {
         let dropdown = document.querySelector("#dropdown");

@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registration Form</title>
+    <title>Login Form</title>
+
+    <!-- Link to Google Fonts for custom font styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+    <!-- CSS Styling -->
     <style>
         body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            box-sizing: border-box;
 
-      /* Gradient Background */
-      background: linear-gradient(90deg, #89A8B2, #000000bb, #144758);
-      background-size: 400% 400%;
-      animation: gradientAnimation 15s infinite linear;
-    }
-
-    /* Keyframes for the gradient animation */
-    @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-        p {
-            text-align: center;
+            /* Gradient Background */
+            background: linear-gradient(90deg, #89A8B2, #000000bb, #144758);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s infinite linear;
         }
+
+        /* Keyframes for the background gradient animation */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Styles for the "Create Account" button */
         a.createButton {
             background-color: #6A9AB0;
             border-color: #6A9AB0;
@@ -53,8 +55,9 @@
             background-color: #6a9ab0b9;
         }
 
-         a.createButton2 {
-            color:rgb(100, 100, 100);
+        /* Styles for the "Forgot Password?" link */
+        a.createButton2 {
+            color: rgb(100, 100, 100);
             padding: 2px;
             margin-top: 100px;
             margin-bottom: 15px;
@@ -63,25 +66,29 @@
             text-decoration: none;
             font-weight: bold;
         }
-
         .createButton2:hover {
-            color:#6a9ab0b9;
-
+            color: #6a9ab0b9;
         }
+
+        /* Form styles */
         form {
             width: 500px;
             padding: 20px;
-            background-color:#B3C8CF;
+            background-color: #B3C8CF;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             margin-top: 1px;
         }
+
+        /* Label styles */
         label {
             display: block;
             margin: 10px 0;
             font-weight: bold;
-            color:rgb(100, 100, 100);
+            color: rgb(100, 100, 100);
         }
+
+        /* Styles for text inputs and buttons */
         input, button {
             display: inline-block;
             transition: background-color 0.3s;
@@ -91,8 +98,9 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             font-size: 16px;
-
         }
+
+        /* Button styles */
         button {
             background-color: #6A9AB0;
             color: white;
@@ -101,24 +109,26 @@
             cursor: pointer;
             font-size: 18px;
             font-weight: bold;
-            
         }
         button:hover {
-            background-color:#6a9ab0b9;
+            background-color: #6a9ab0b9;
         }
- 
+
+        /* Styling for the welcome message */
         .welcome {
             font-size: 60px;
             font-family: "Playfair Display", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             margin-top: 0;
-                }
- 
+            text-align: center;
+        }
+
+        /* Centering "Create Account" button section */
         .toggle-btns {
             text-align: center;
             font-weight: bold;
-           
         }
 
+        /* Image styling */
         img {
             height: 20vh;
             width: 20vh;
@@ -127,36 +137,57 @@
             margin-right: auto;
             margin-bottom: 0;
         }
+
+        /* Error message styles */
+        .error-message {
+            color: rgb(54, 48, 48); 
+            text-align: center; 
+            font-weight: bold; 
+            margin-top: 0px; 
+            margin-bottom: 15px;
+    }
     </style>
 </head>
 <body>
+    <!-- Login Container/Content -->
     <div>
+        <!-- Image container for logo -->
         <div class="img">
-        <img src="image/logo.png" alt="Image" />
-    </div>
-        <br><p class = "welcome" style = "color: white">WELCOME!</p>
-        <form id="login-form" action="/login" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <% if (typeof error !== 'undefined' && error.includes("Username")) { %>
-                <p><%= error %></p>
-            <% } %>
+            <img src="image/logo.png" alt="Image" />
+        </div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <% if (typeof error !== 'undefined' && error.includes("password")) { %>
-                <p><%= error %></p>
-            <% } %>
+        <!-- Welcome message  -->
+        <br><p class="welcome" style="color: white">WELCOME!</p>
+
+        <!-- Login form -->
+        <form id="login-form" action="/login" method="POST">
+            <!-- Username input field -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <!-- Display error message if there is an issue with the username -->
+        <% if (typeof error !== 'undefined' && error.includes("Username")) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+        
+        <!-- Password input field -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <!-- Display error message if there is an issue with the password -->
+        <% if (typeof error !== 'undefined' && error.includes("password")) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
 
             <a href class="createButton2" type="button">Forgot Password?</a>
             <br><br>
+
             <button type="submit">Log In</button>
-            
         </form>
 
-    <div class="toggle-btns">
-        <br><br>
+        <!-- Section with a button to go to the signup page -->
+        <div class="toggle-btns">
+            <br><br>
             <a href="/signup" class="createButton" type="button">Create an Account</a>
+        </div>
     </div>
 </body>
 </html>

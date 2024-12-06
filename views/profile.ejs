@@ -5,163 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <style>
+        /* General body styling with a gradient animation */
         body {
-            background-color: #B3C8CF;
+            background: linear-gradient(90deg, #89A8B2, #000000bb, #144758);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s infinite linear;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             height: 100vh;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* Smooth gradient background animation */
+        @keyframes gradientAnimation {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Profile container centering */
         .profile-container {
-            text-align: center; /* Center text and elements */
+            text-align: center;
         }
 
+        /* Profile picture styling */
         .profilePicture {
-            width: 150px; 
-            height: 150px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
-        .fileEditBtn, .uploadBtn {
+        /* Styling for buttons and inputs */
+        .fileEditBtn, .uploadBtn, .editBtn, .cancelBtn {
             display: inline-block;
-            transition: background-color 0.3s;
             background-color: #6A9AB0;
-            border-color: #6A9AB0;
-            padding: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            margin-top: 100px;
-            margin-bottom: 15px;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-color: black;
+            border-width: 2px;
             border-radius: 10px;
             font-size: 16px;
-            color: white;
             text-decoration: none;
         }
 
-        .uploadBtn:hover {
+        .uploadBtn:hover, .editBtn:hover, .cancelBtn:hover {
             background-color: #6a9ab07a;
-            border-color: #6A9AB0;
         }
 
-
+        /* Styling for user information fields */
         .username, .email, .sex {
             margin: 10px 0;
+            padding: 10px 20px;
             background-color: #6A9AB0;
-            border-color: #6A9AB0;
-            padding: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            font-size: 16px;
             color: white;
-            text-decoration: none;
-        }
-
-        .editCancel  {
-            margin-top: 20px; /* Space above the edit/cancel buttons */
-            
-        }
-        .editBtn, .cancelBtn  {
-            display: inline-block;
-            transition: background-color 0.3s;
-            margin-top: 20px;
-            background-color: #6A9AB0;
-            border-color: #6A9AB0;
-            padding: 5px;
-            margin-top: 10px;
-            margin-bottom: 10px;
             border-radius: 10px;
-            font-size: 16px;
-            color: white;
-            text-decoration: none;
+            border-color: black;
+            border-width: 5px;
         }
-
-        .editBtn:hover, .cancelBtn:hover  {
-            background-color: #6a9ab07a;
-            border-color: #6A9AB0;
-        }
-
     </style>
 </head>
 <body>
+    <!-- Profile Container -->
     <div class="profile-container">
-
-        <!-- Photo and Upload -->
+        <!-- Profile Picture and Upload -->
         <div class="photoUp">
+            <!-- Display profile picture -->
             <img src="<%= user.profilePicPath %>" class="profilePicture" alt="Profile Picture">
+            <!-- Form to upload a new profile picture -->
             <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
                 <input type="file" name="profilePic" accept="image/*" class="fileEditBtn">
                 <button type="submit" class="uploadBtn">Upload</button>
             </form>
         </div>
-        
-        <!-- Username -->
+
+        <!-- User Information -->
         <div class="username">
-            <label for="username" class="">Username:</label>
-            <input type="text" id="username" class="" value="<%= user.userName %>" disabled>
+            <label for="username">Username:</label>
+            <input type="text" id="username" value="<%= user.userName %>" disabled>
         </div>
-        
-        <!-- Email -->
         <div class="email">
-            <label for="email" class="">Email:</label>
-            <input type="email" id="email" class="" value="<%= user.email %>" disabled>
+            <label for="email">Email:</label>
+            <input type="email" id="email" value="<%= user.email %>" disabled>
         </div>
-        
-        <!-- Sex -->
         <div class="sex">
-            <label for="sex" class="">Sex:</label>
-            <select id="sex" class="" disabled>
+            <label for="sex">Sex:</label>
+            <select id="sex" disabled>
                 <option value="Male" <%= user.sex === 'Male' ? 'selected' : '' %>>Male</option>
                 <option value="Female" <%= user.sex === 'Female' ? 'selected' : '' %>>Female</option>
                 <option value="Others" <%= user.sex === 'Others' ? 'selected' : '' %>>Others</option>
             </select>
         </div>
-        
+
+        <!-- Edit and Cancel Buttons -->
         <div class="editCancel">
             <button id="editButton" class="editBtn">Edit</button>
             <button id="cancelButton" class="cancelBtn" onclick="window.location.href='/home'">Cancel</button>
         </div>
     </div>
+
     <script>
+        // Enable editing of user information fields
         const editButton = document.getElementById('editButton');
         const usernameInput = document.getElementById('username');
         const emailInput = document.getElementById('email');
         const sexSelect = document.getElementById('sex');
-    
-        editButton.addEventListener('click', function() {
+
+        editButton.addEventListener('click', () => {
             if (editButton.textContent === 'Edit') {
-                //Enable inputs
+                // Enable input fields for editing
                 usernameInput.disabled = false;
                 emailInput.disabled = false;
                 sexSelect.disabled = false;
                 editButton.textContent = 'Save';
             } else {
-                //Prepare data to send to server
+                // Collect updated data and send it to the server
                 const updatedData = {
                     userName: usernameInput.value,
                     email: emailInput.value,
                     sex: sexSelect.value
                 };
-    
-                //Send the updated data to server
+
                 fetch('/update-profile', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedData)
                 })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = '/home';
+                        window.location.href = '/home'; // Redirect on success
                     } else {
                         alert('Error updating profile.');
                     }
@@ -170,8 +144,8 @@
                     console.error('Error:', error);
                     alert('Error updating profile.');
                 });
-    
-                //Disable inputs after saving
+
+                // Disable input fields after saving
                 usernameInput.disabled = true;
                 emailInput.disabled = true;
                 sexSelect.disabled = true;
